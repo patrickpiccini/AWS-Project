@@ -4,7 +4,7 @@
 **/testekey.pem
 **/0-provider.tf
 **/terraform.*
-**/terraform.lock.hcl
+**/.terraform.lock.hcl
 **/.terraform/
 
 # .tfstate files
