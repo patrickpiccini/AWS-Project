@@ -1,11 +1,17 @@
 resource "aws_elb" "aws_project_elb" {
   name = "aws-project-elb-asg"
-  security_groups = ["${aws_security_group.aws_project_sg_elb.id}"]
-  availability_zones = ["${data.aws_availability_zones.all.names}"]
+
+  security_groups = [
+    "${aws_security_group.aws_project_sg_elb.id}"
+  ]
+  subnets = [
+    "${aws_subnet.public_subnet_sa_east_1a.id}",
+    "${aws_subnet.public_subnet_sa_east_1c.id}"
+  ]
 
   health_check {
     interval              = 30
-    target = "HTTP:8080/" 
+    target                = "HTTP:80/" 
     timeout               = 5
     healthy_threshold     = 5
     unhealthy_threshold   = 2
@@ -14,7 +20,7 @@ resource "aws_elb" "aws_project_elb" {
   listener {
     lb_port = 80
     lb_protocol = "http"
-    instance_port = "8080"
+    instance_port = "80"
     instance_protocol = "http"
   }
 }

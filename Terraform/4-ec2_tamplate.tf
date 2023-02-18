@@ -1,6 +1,5 @@
 resource "aws_launch_configuration" "web_server_tamplate" {
-	# count 		= "${var.counter}"
-	# name      	= "${format("web_server_tamplate", count.index+1)}"
+	name_prefix = "web-server"
 
 	ebs_block_device {
 		device_name = "/dev/xvda"
@@ -13,7 +12,8 @@ resource "aws_launch_configuration" "web_server_tamplate" {
 	image_id                              = "${var.ami}"
 	instance_type                         = "t2.micro"
 	key_name                              = "${var.key}"
-	security_groups  					  = "${aws_security_group.aws_project_sg_ec2.id}"
+	security_groups  					  = ["${aws_security_group.aws_project_sg_elb.id}"]
+	associate_public_ip_address 		  = true
 
 	user_data = "${base64encode(file("install_apache.sh"))}"
 
@@ -21,8 +21,4 @@ resource "aws_launch_configuration" "web_server_tamplate" {
     create_before_destroy = true
 	}
 
-	# tags = {
-	# 	Name = "aws_project"
-	# 	Name = "${format("web_server_tamplate", count.index+1)}"
-	# }
 }
