@@ -16,3 +16,22 @@ resource "aws_instance" "web_server_bd" {
 }
 
 
+
+resource "aws_instance" "web_server_bd" {
+	ami           				= "ami-015e30624fffff117"
+	instance_type 				= "t2.micro"
+	key_name 					= "testekey.pem"
+	vpc_security_group_ids 		= "sg-0f834f28db3523ef4"
+	associate_public_ip_address = true
+	
+	user_data = "${file("install_apache.sh")}"
+
+	tags = {
+		Name = "aws_project"
+		Name = "aws_project_server_1"
+	}
+}
+
+
+
+

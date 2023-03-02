@@ -1,6 +1,19 @@
 #! /bin/bash
 sudo apt-get update -y
-sudo apt-get install -y apache2
-sudo systemctl start apache2
-sudo systemctl enable apache2
-echo "<h1>The page was created by the user data ...Host:$(hostname -f)</h1>" | sudo tee /var/www/html/index.html
+sudo apt install python3-pip -y
+
+cd /
+sudo mkdir app
+cd app/
+
+sudo git config --global user.name "HML_Server"
+sudo git config --global user.email patrickbpiccini@hotmail.com
+sudo git clone https://github.com/patrickpiccini/dev-icons.git
+
+cd dev-icons/
+pip install -r requirements.txt
+
+python3 app.py >> log.txt
+
+# flask run --host=0.0.0.0 --port=8080
+
